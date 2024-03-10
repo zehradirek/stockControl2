@@ -4,7 +4,6 @@ import com.tobeto.stockcontrol2.filter.JwtAuthorizationFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -26,7 +25,8 @@ public class SecurityConfig {
 			"/swagger-ui/**",
 			"/v2/api-docs",
 			"/v3/api-docs",
-			"/v3/api-docs/**"
+			"/v3/api-docs/**",
+			"/api/**"
 
 	};
 
@@ -38,7 +38,6 @@ public class SecurityConfig {
 		.authorizeHttpRequests(authorize -> authorize
 						.requestMatchers(WHITE_LIST_URLS).permitAll()
 						.requestMatchers("/api/v1/login", "/api/v1/signup").permitAll()
-						.requestMatchers(HttpMethod.POST, "/api/products/**").hasAnyRole("ROLE_ADMIN")
 				.anyRequest().authenticated()
 				)
 		     .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
